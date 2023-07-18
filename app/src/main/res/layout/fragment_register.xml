@@ -1,14 +1,104 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragments.RegisterFragment">
-
-    <!-- TODO: Update blank fragment layout -->
+    android:orientation="vertical"
+    android:padding="16dp">
     <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="80dp"
+        android:text="Registracija"
+        android:textSize="25dp"
+        android:textStyle="bold"
+        android:layout_gravity="center"/>
+    <EditText
+        android:id="@+id/register_name"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="wrap_content"
+        android:hint="Ime"
+        android:minHeight="48dp"
+        android:inputType="text" />
+    <EditText
+        android:id="@+id/register_surname"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Prezime"
+        android:minHeight="48dp"
+        android:inputType="text" />
+    <EditText
+        android:id="@+id/register_username"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Korisničko ime"
+        android:minHeight="48dp"
+        android:inputType="textPersonName" />
 
-</FrameLayout>
+    <EditText
+        android:id="@+id/register_password"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Password"
+        android:minHeight="48dp"
+        android:inputType="textPassword" />
+    <EditText
+        android:id="@+id/register_phonenumber"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Broj telefona"
+        android:minHeight="48dp"
+        android:inputType="text" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        >
+
+        <Button
+            android:id="@+id/register_imagebutton"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            style="?attr/materialButtonOutlinedStyle"
+            android:gravity="center"
+            android:text="Izaberi sliku"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="15dp"
+            />
+
+        <ImageView
+        android:id="@+id/register_profilePhoto"
+        android:layout_width="109dp"
+        android:layout_height="84dp"
+        android:adjustViewBounds="true"
+        android:contentDescription="User profile photo"
+        android:outlineProvider="bounds"
+        android:scaleType="centerCrop"
+        android:translationZ="2sp"
+        app:srcCompat="@drawable/user"
+        tools:srcCompat="@drawable/user"
+        android:layout_marginLeft="30dp"/>
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/register_registerbutton"
+        style="?attr/materialButtonOutlinedStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="Registracija" />
+    <TextView
+        android:id="@+id/register_linkLogin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:text="Već imate nalog? Ulogujte se ovde"
+        android:gravity="center"
+        android:textSize="20dp"
+        android:textColor="#3F51B5"
+        />
+</LinearLayout>
