@@ -1,0 +1,120 @@
+package elfak.mosis.ribolov.fragments
+
+import android.app.Activity
+import android.content.Context
+import android.os.Bundle
+import android.util.Log
+import androidx.fragment.app.Fragment
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.widget.EditText
+import android.widget.Toast
+import androidx.navigation.Navigation
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
+import elfak.mosis.ribolov.R
+import elfak.mosis.ribolov.databinding.FragmentLoginBinding
+import elfak.mosis.ribolov.databinding.FragmentRegisterBinding
+import java.security.MessageDigest
+
+
+class LoginFragment : Fragment() {
+
+    private var _binding: FragmentLoginBinding? = null
+    private val binding get() = _binding!!
+    private var databaseUser: DatabaseReference?=null
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+    }
+
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        // Inflate the layout for this fragment
+        _binding = FragmentLoginBinding.inflate(inflater, container, false)
+
+
+        return binding.root
+    }
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        val sharedPreferences = requireActivity().getSharedPreferences("LovNaBlago", Context.MODE_PRIVATE)
+        val isLoggedIn = sharedPreferences.getBoolean("isLoggedIn", false)
+        if (isLoggedIn) {
+            Navigation.findNavController(binding.root).navigate(R.id.action_LoginFragment_to_HomeFragment)
+        }
+        binding.loginLinkRegister.setOnClickListener{
+            Navigation.findNavController(binding.root).navigate(R.id.action_LoginFragment_to_RegisterFragment)
+        }
+        binding.loginLoginbutton.setOnClickListener{
+            Logovanje();
+        }
+
+    }
+    private fun saveLoginState() {
+        val sharedPreferences = requireContext().getSharedPreferences("Ribolov", Context.MODE_PRIVATE)
+        sharedPreferences.edit().putBoolean("isLoggedIn", true).apply()
+    }
+    private fun Logovanje() {
+        val editUsername = requireView().findViewById<EditText>(R.id.login_username)
+        val editSifra = requireView().findViewById<EditText>(R.id.login_password)
+        val username = editUsername.text.toString()
+        val sifra = hashPassword(editSifra.text.toString())
+
+        if (username.isNotEmpty() && sifra.isNotEmpty()) {
+            val databaseUser = FirebaseDatabase.getInstance("https://ribolov-a8c7c-default-rtdb.europe-west1.firebasedatabase.app/").getReference("Users")
+            databaseUser.child(username).get().addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    val dataSnapshot = task.result
+                    if (dataSnapshot.exists()) {
+                        val dataSnapshot = task.result
+                        val username = dataSnapshot.child("korisnickoime").getValue(String::class.java)
+                        val sifra2 = dataSnapshot.child("sifra").getValue(String::class.java)
+                        if(sifra2==sifra)
+                        {
+                            saveLoginState()
+                            Navigation.findNavController(binding.root).navigate(R.id.action_LoginFragment_to_HomeFragment)
+                        }else{
+                            Toast.makeText(this.activity,"Pogresna lozinka", Toast.LENGTH_SHORT).show()
+                        }
+                    } else {
+
+                        Toast.makeText(this.activity,"Ne postoji nalog sa zadataim korisnickim imenom",Toast.LENGTH_SHORT).show()
+                    }
+                } else {
+                    // Handle task exception or error
+                    val exception = task.exception
+                    // Log or display the error message
+                    exception?.message?.let { errorMessage ->
+                        Log.e("Firebase", errorMessage)
+                    }
+                }
+            }
+
+
+
+
+        }else {
+            val activityObj: Activity? = this.activity
+            Toast.makeText(activityObj, "Unesite sve podatke", Toast.LENGTH_LONG).show()
+        }
+    }
+    private fun hashPassword(password: String): String {
+        val md = MessageDigest.getInstance("SHA-256")
+        val hashedBytes = md.digest(password.toByteArray(Charsets.UTF_8))
+        return bytesToHex(hashedBytes)
+    }
+
+    private fun bytesToHex(bytes: ByteArray): String {
+        val hexArray = "0123456789ABCDEF".toCharArray()
+        val hexChars = CharArray(bytes.size * 2)
+        for (i in bytes.indices) {
+            val v = bytes[i].toInt() and 0xFF
+            hexChars[i * 2] = hexArray[v.ushr(4)]
+            hexChars[i * 2 + 1] = hexArray[v and 0x0F]
+        }
+        return String(hexChars)
+    }
+}

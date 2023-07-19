@@ -1,19 +1,21 @@
 package elfak.mosis.ribolov.fragments
 
 import android.app.Activity
+import android.app.ProgressDialog
 import android.content.Intent
 import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.Toast
+import androidx.navigation.fragment.findNavController
+import androidx.fragment.app.Fragment
+import androidx.navigation.Navigation
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
 import elfak.mosis.ribolov.R
 import elfak.mosis.ribolov.data.User
@@ -23,6 +25,7 @@ import java.io.InputStream
 import java.security.MessageDigest
 import kotlin.random.Random
 
+
 class RegisterFragment : Fragment() {
 
     private val random = Random(System.currentTimeMillis())
@@ -31,8 +34,15 @@ class RegisterFragment : Fragment() {
     private var selectedImageUri: Uri? = null
     private var databaseUser:DatabaseReference?=null
     private var downloadUrl:String=""
+    private lateinit var progressDialog: ProgressDialog
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        progressDialog = ProgressDialog(requireContext())
+        progressDialog.setMessage("Registrovanje: 0 %")
+        progressDialog.setCancelable(false)
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL)
+        progressDialog.progress = 0
+        progressDialog.max = 100
     }
 
 
@@ -51,12 +61,14 @@ class RegisterFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
 
-
         binding.registerImagebutton.setOnClickListener{
             otvoriGaleriju()
         }
         binding.registerRegisterbutton.setOnClickListener{
             register() }
+        binding.registerLinkLogin.setOnClickListener{
+            Navigation.findNavController(binding.root).navigate(R.id.action_RegisterFragment_to_LoginFragment)
+        }
 
     }
 
@@ -94,7 +106,7 @@ class RegisterFragment : Fragment() {
         if (ime != "" && prezime != "" && username != "" && sifra != "" && brojTelefona != "") {
             databaseUser =
                 FirebaseDatabase.getInstance("https://ribolov-a8c7c-default-rtdb.europe-west1.firebasedatabase.app/")
-                    .getReference()
+                    .getReference("Users")
 
             val storageRef= FirebaseStorage.getInstance().getReference();
             val stringBuilder = StringBuilder()
@@ -103,6 +115,7 @@ class RegisterFragment : Fragment() {
                 stringBuilder.append(randomDigit)
             }
             if (selectedImageUri!=null) {
+                progressDialog.show()
                 val fileRef = storageRef.child("images/${System.currentTimeMillis()}.jpg")
                 fileRef.putFile(selectedImageUri!!)
                     .addOnSuccessListener {
@@ -110,24 +123,44 @@ class RegisterFragment : Fragment() {
                         fileRef.downloadUrl.addOnSuccessListener { uri ->
                             val activityObj: Activity? = this.activity
                             val user = User(ime, prezime, username, sifra, brojTelefona,uri.toString())
-                            val userKey = databaseUser?.push()?.key // Generate a unique key for the new object
-                            if (userKey != null) {
-                                databaseUser?.child(userKey)?.setValue(user)
-                                    ?.addOnSuccessListener {
-                                        Toast.makeText(activityObj, "Uspesno registrovan korisnik", Toast.LENGTH_LONG).show()
+                            if (user.korisnickoime != null) {
+                                val databaseUser = FirebaseDatabase.getInstance("https://ribolov-a8c7c-default-rtdb.europe-west1.firebasedatabase.app/").getReference("Users")
+                                databaseUser.child(username).get().addOnCompleteListener { task ->
+                                    if (task.isSuccessful) {
+                                        val dataSnapshot = task.result
+                                        if (dataSnapshot.exists()) {
+                                            Toast.makeText(activityObj, "Vec postoji nalog sa tim usernameom", Toast.LENGTH_LONG).show()
+                                        }
+                                        else
+                                        {
+                                            databaseUser?.child(user.korisnickoime)?.setValue(user)
+                                                ?.addOnSuccessListener {
+                                                    Navigation.findNavController(binding.root).navigate(R.id.action_RegisterFragment_to_LoginFragment)
+                                                    Toast.makeText(activityObj, "Uspesno registrovan korisnik", Toast.LENGTH_LONG).show()
+                                                }
+                                                ?.addOnFailureListener {
+                                                    Toast.makeText(activityObj, "Bezuspesno registrovanje", Toast.LENGTH_LONG).show()
+                                                }
+                                        }
                                     }
-                                    ?.addOnFailureListener {
-                                        Toast.makeText(activityObj, "Bezuspesno registrovanje", Toast.LENGTH_LONG).show()
-                                    }
+                                }
                             } else {
                                 val activityObj: Activity? = this.activity
                                 Toast.makeText(activityObj, "Unesite sve podatke", Toast.LENGTH_LONG).show()
                             }
                         }
                     }
+                    .addOnProgressListener { taskSnapshot ->
+                        val percent = ((100 * taskSnapshot.bytesTransferred) / taskSnapshot.totalByteCount).toInt()
+                        progressDialog.progress = percent
+                        progressDialog.setMessage("Registrovanje: $percent %")
+                    }
                     .addOnFailureListener {
                         val activityObj: Activity? = this.activity
                         Toast.makeText(activityObj, "Doslo je do greske prilikom uploadovanja slike", Toast.LENGTH_LONG).show()
+                    }
+                    .addOnCompleteListener { task ->
+                        progressDialog.dismiss()
                     }
             }
 
