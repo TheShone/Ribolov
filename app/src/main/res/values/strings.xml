@@ -6,4 +6,5 @@
     <string name="registration">Register</string>
     <string name="register_fragment_label">FragmentRegister</string>
     <string name="login_fragment_label">FragmentLogin</string>
+    <string name="MAPS_API_KEY">AIzaSyBebmgaf1-lvempS1EjAWMia4L_ViaaPDc</string>
 </resources>
