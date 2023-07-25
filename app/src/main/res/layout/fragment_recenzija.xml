@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".fragments.RecenzijaFragment"
+    android:layout_gravity="center">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="16dp"
+        android:layout_gravity="center">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Ocena:"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:layout_gravity="center"
+            android:layout_marginBottom="8dp" />
+        <RatingBar
+            android:id="@+id/recenzija_ratingBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:numStars="5"
+            android:stepSize="1"
+            android:rating="0"
+            android:layout_gravity="center"
+            android:contentDescription="Ocena"
+            android:layout_marginBottom="16dp" />
+
+        <!-- Comment Section -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Komentar:"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:layout_gravity="center"
+             />
+
+        <EditText
+            android:id="@+id/recenzija_kom"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Dodaj komentar ovde..."
+            android:maxLines="5"
+            android:padding="16dp"
+             />
+
+            <Button
+                android:id="@+id/recenzija_dodajKomentar"
+                style="?attr/materialButtonOutlinedStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="Dodaj recenziju" />
+
+    </LinearLayout>
+
+</FrameLayout>

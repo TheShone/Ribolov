@@ -11,12 +11,14 @@ import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.Navigation
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import elfak.mosis.ribolov.R
 import elfak.mosis.ribolov.databinding.FragmentLoginBinding
 import elfak.mosis.ribolov.databinding.FragmentRegisterBinding
+import elfak.mosis.ribolov.viewmodels.LoggedUserViewModel
 import java.security.MessageDigest
 
 
@@ -25,6 +27,7 @@ class LoginFragment : Fragment() {
     private var _binding: FragmentLoginBinding? = null
     private val binding get() = _binding!!
     private var databaseUser: DatabaseReference?=null
+    private val loggedUserViewModel: LoggedUserViewModel by activityViewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
@@ -35,14 +38,14 @@ class LoginFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         _binding = FragmentLoginBinding.inflate(inflater, container, false)
-        (requireActivity() as AppCompatActivity).supportActionBar?.hide()
+        (requireActivity() as AppCompatActivity).supportActionBar?.show()
 
 
         return binding.root
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val sharedPreferences = requireActivity().getSharedPreferences("LovNaBlago", Context.MODE_PRIVATE)
+        val sharedPreferences = requireActivity().getSharedPreferences("Ribolov", Context.MODE_PRIVATE)
         val isLoggedIn = sharedPreferences.getBoolean("isLoggedIn", false)
         if (isLoggedIn) {
             Navigation.findNavController(binding.root).navigate(R.id.action_LoginFragment_to_HomeFragment)
@@ -55,9 +58,11 @@ class LoginFragment : Fragment() {
         }
 
     }
-    private fun saveLoginState() {
+    private fun saveLoginState(username: String, password: String) {
         val sharedPreferences = requireContext().getSharedPreferences("Ribolov", Context.MODE_PRIVATE)
         sharedPreferences.edit().putBoolean("isLoggedIn", true).apply()
+        sharedPreferences.edit().putString("username",username ).apply()
+        sharedPreferences.edit().putString("password",password ).apply()
     }
     private fun Logovanje() {
         val editUsername = requireView().findViewById<EditText>(R.id.login_username)
@@ -72,11 +77,12 @@ class LoginFragment : Fragment() {
                     val dataSnapshot = task.result
                     if (dataSnapshot.exists()) {
                         val dataSnapshot = task.result
-                        val username = dataSnapshot.child("korisnickoime").getValue(String::class.java)
-                        val sifra2 = dataSnapshot.child("sifra").getValue(String::class.java)
+                        val username: String = dataSnapshot.child("korisnickoime").getValue(String::class.java)!!
+                        val sifra2: String = dataSnapshot.child("sifra").getValue(String::class.java)!!
                         if(sifra2==sifra)
                         {
-                            saveLoginState()
+                            saveLoginState(username,sifra)
+                            //loggedUserViewModel.login(username)
                             Navigation.findNavController(binding.root).navigate(R.id.action_LoginFragment_to_HomeFragment)
                         }else{
                             Toast.makeText(this.activity,"Pogresna lozinka", Toast.LENGTH_SHORT).show()

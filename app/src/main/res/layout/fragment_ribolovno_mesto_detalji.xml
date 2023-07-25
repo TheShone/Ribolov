@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:theme="@style/Theme.AppCompat.DayNight.Dialog"
+    android:layout_height="match_parent"
+    tools:context=".fragments.RibolovnoMestoDetaljiFragment">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center">
+
+        <EditText
+            android:id="@+id/detRibMesto_naziv"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:hint="Ribolovno Mesto:"
+            android:gravity="center"/>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/addRibMesto_tipRibe"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Tip ribe:"
+            android:layout_below="@id/addRibMesto_naziv"
+
+            />
+
+        <TextView
+            android:id="@+id/detRibMesto_tipRibe"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_below="@id/addRibMesto_tipRibe"
+            android:layout_marginLeft="20dp"
+            android:clickable="false"
+            android:background="@null" />
+    </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/addRibMesto_tipRibe"
+            android:text="Ribolovno mesto poseduje:"
+            android:textSize="20dp"
+            android:textStyle="bold"
+            android:layout_gravity="center" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/addRibMesto_tipRibe"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Pristupacnost"
+                android:textSize="16sp"
+                android:layout_gravity="center_vertical" />
+
+            <CheckBox
+                android:id="@+id/detRibMesto_pristupacnost"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_marginStart="8dp"
+                android:layout_gravity="center_vertical"
+                android:clickable="false"
+                android:background="@null"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/addRibMesto_pristupacnost"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Uredjenost"
+                android:textSize="16sp"
+                android:layout_gravity="center_vertical" />
+
+            <CheckBox
+                android:id="@+id/detRibMesto_uredjenost"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_marginStart="8dp"
+                android:layout_gravity="center_vertical"
+                android:clickable="false"
+                android:background="@null"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/addRibMesto_uredjenost"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Čistoća dna"
+                android:textSize="16sp"
+                android:layout_gravity="center_vertical" />
+
+            <CheckBox
+                android:id="@+id/detRibMesto_cistocaDna"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_marginStart="8dp"
+                android:layout_gravity="center_vertical"
+                android:clickable="false"
+                android:background="@null"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/addRibMesto_cistocaDna"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Platforma"
+                android:textSize="16sp"
+                android:layout_gravity="center_vertical" />
+
+            <CheckBox
+                android:id="@+id/detRibMesto_platforma"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_marginStart="8dp"
+                android:layout_gravity="center_vertical"
+                android:clickable="false"
+                android:background="@null"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/addRibMesto_platforma"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Šator"
+                android:textSize="16sp"
+                android:layout_gravity="center_vertical" />
+
+            <CheckBox
+                android:id="@+id/detRibMesto_sator"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_marginStart="8dp"
+                android:layout_gravity="center_vertical"
+                android:clickable="false"
+                android:background="@null"/>
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/addRibMesto_cistocaDna"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Oglašavač"
+                android:textSize="16dp"
+                android:layout_gravity="center_vertical" />
+
+            <TextView
+                android:id="@+id/detRibMesto_oglasavac"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:textSize="16dp"
+                android:clickable="false"
+                android:background="@null"/>
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:layout_gravity="center"
+            android:layout_marginLeft="6dp">
+
+            <Button
+                android:id="@+id/detRibMesto_rewiev"
+                style="?attr/materialButtonOutlinedStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Dodaj recenziju" />
+            <Button
+                android:id="@+id/detRibMesto_recenzije"
+                style="?attr/materialButtonOutlinedStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Recenzije"
+                android:layout_marginLeft="10dp"/>
+        </LinearLayout>
+
+    </LinearLayout>
+</FrameLayout>

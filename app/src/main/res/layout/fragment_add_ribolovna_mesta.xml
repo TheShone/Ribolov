@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".fragments.AddRibolovnaMestaFragment">
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp"
+    android:orientation="vertical"
+    android:layout_marginTop="50dp">
+
+    <EditText
+        android:id="@+id/addRibMesto_naziv"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:hint="Ribolovno Mesto:" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Tip ribe:"
+        android:layout_below="@id/addRibMesto_naziv"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="8dp" />
+
+    <Spinner
+        android:id="@+id/addRibMesto_tipRibe"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_below="@id/addRibMesto_tipRibe"
+        android:entries="@array/options" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/addRibMesto_tipRibe"
+        android:layout_marginTop="80dp"
+        android:text="Ribolovno mesto poseduje:"
+        android:textSize="25dp"
+        android:textStyle="bold"
+        android:layout_gravity="center" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/addRibMesto_tipRibe"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Pristupacnost"
+            android:textSize="16sp"
+            android:layout_gravity="center_vertical" />
+
+        <CheckBox
+            android:id="@+id/addRibMesto_pristupacnost"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_gravity="center_vertical" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/addRibMesto_pristupacnost"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Uredjenost"
+            android:textSize="16sp"
+            android:layout_gravity="center_vertical" />
+
+        <CheckBox
+            android:id="@+id/addRibMesto_uredjenost"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_gravity="center_vertical" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/addRibMesto_uredjenost"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Čistoća dna"
+            android:textSize="16sp"
+            android:layout_gravity="center_vertical" />
+
+        <CheckBox
+            android:id="@+id/addRibMesto_cistocaDna"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_gravity="center_vertical" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/addRibMesto_cistocaDna"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Platforma"
+            android:textSize="16sp"
+            android:layout_gravity="center_vertical" />
+
+        <CheckBox
+            android:id="@+id/addRibMesto_platforma"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_gravity="center_vertical" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/addRibMesto_platforma"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Šator"
+            android:textSize="16sp"
+            android:layout_gravity="center_vertical" />
+
+        <CheckBox
+            android:id="@+id/addRibMesto_sator"
+            android:layout_width="wrap_content"
+            android:layout_height="60dp"
+            android:layout_marginStart="8dp"
+            android:layout_gravity="center_vertical" />
+
+    </LinearLayout>
+    <Button
+        android:id="@+id/addRibMesto_dugme"
+        style="?attr/materialButtonOutlinedStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="Dodaj" />
+</LinearLayout>
+</FrameLayout>

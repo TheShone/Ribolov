@@ -7,4 +7,13 @@
     <string name="register_fragment_label">FragmentRegister</string>
     <string name="login_fragment_label">FragmentLogin</string>
     <string name="MAPS_API_KEY">AIzaSyBebmgaf1-lvempS1EjAWMia4L_ViaaPDc</string>
+    <string name="filter_ribolovno_mesto">Filter</string>
+    <string-array name="options">
+        <item>Izaberi</item>
+        <item>Pastrmka</item>
+        <item>Štuka</item>
+        <item>Deverika</item>
+        <item>Smudj</item>
+        <item>Som</item>
+    </string-array>
 </resources>

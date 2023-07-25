@@ -28,9 +28,103 @@
     <fragment
         android:id="@+id/HomeFragment"
         android:name="elfak.mosis.ribolov.fragments.HomeFragment"
-        android:label="fragment_home"
-        tools:layout="@layout/fragment_home" />
+        android:label="FragmentHome"
+        tools:layout="@layout/fragment_home" >
     <action
         android:id="@+id/action_HomeFragment_to_LoginFragment"
         app:destination="@id/LoginFragment" />
+        <action
+        android:id="@+id/action_HomeFragment_to_AddRibolovnaMestaFragment"
+        app:destination="@id/AddRibolovnaMestaFragment" />
+        <action
+            android:id="@+id/action_HomeFragment_to_RibolovnoMestoDetaljiFragment"
+            app:destination="@id/RibolovnoMestoDetaljiFragment" />
+        <action
+            android:id="@+id/action_HomeFragment_to_Recenzije"
+            app:destination="@id/RecenzijeFragment" />
+        <action
+            android:id="@+id/action_HomeFragment_to_RangListaFragment"
+            app:destination="@id/RangListaFragment" />
+        <action
+            android:id="@+id/action_HomeFragment_to_ProfilFragment"
+            app:destination="@id/ProfilFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/AddRibolovnaMestaFragment"
+        android:name="elfak.mosis.ribolov.fragments.AddRibolovnaMestaFragment"
+        android:label="FragmentAddRibolovnaMesta"
+        tools:layout="@layout/fragment_add_ribolovna_mesta" >
+        <action
+            android:id="@+id/action_AddRibolovnaMestaFragment_to_LoginFragment"
+            app:destination="@id/LoginFragment" />
+        <action
+            android:id="@+id/action_AddRibolovnaMestaFragment_to_HomeFragment"
+            app:destination="@id/HomeFragment" />
+        <action
+            android:id="@+id/action_AddRibolovnaMestaFragment_to_RangListaFragment"
+            app:destination="@id/RangListaFragment" />
+        <action
+            android:id="@+id/action_AddRibolovnaMestaFragment_to_ProfilFragment"
+            app:destination="@id/ProfilFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/RibolovnoMestoDetaljiFragment"
+        android:name="elfak.mosis.ribolov.fragments.RibolovnoMestoDetaljiFragment"
+        android:label="FragmentRibolovnoMestoDetaljiFragment"
+        tools:layout="@layout/fragment_ribolovno_mesto_detalji" >
+        <action
+            android:id="@+id/action_RibolovnoMestoDetalji_to_Recenzija"
+            app:destination="@id/RecenzijaFragment" />
+        <action
+            android:id="@+id/action_RibolovnoMestoDetalji_to_Recenzije"
+            app:destination="@id/RecenzijeFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/RecenzijaFragment"
+        android:name="elfak.mosis.ribolov.fragments.RecenzijaFragment"
+        android:label="RecenzijaFragment"
+        tools:layout="@layout/fragment_recenzija" >
+    </fragment>
+    <fragment
+        android:id="@+id/RecenzijeFragment"
+        android:name="elfak.mosis.ribolov.fragments.RecenzijeFragment"
+        android:label="RecenzijeFragment"
+        tools:layout="@layout/fragment_recenzije" >
+    </fragment>
+    <fragment
+        android:id="@+id/RangListaFragment"
+        android:name="elfak.mosis.ribolov.fragments.RangListaFragment"
+        android:label="RangListaFragment"
+        tools:layout="@layout/fragment_rang_lista" >
+        <action
+            android:id="@+id/action_RangListaFragment_to_AddRibolovnaMestaFragment"
+            app:destination="@id/AddRibolovnaMestaFragment" />
+        <action
+            android:id="@+id/action_RangListaFragment_to_LoginFragment"
+            app:destination="@id/LoginFragment" />
+        <action
+            android:id="@+id/action_RangListaFragment_to_HomeFragment"
+            app:destination="@id/HomeFragment" />
+        <action
+            android:id="@+id/action_RangListaFragment_to_ProfilFragment"
+            app:destination="@id/ProfilFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/ProfilFragment"
+        android:name="elfak.mosis.ribolov.fragments.ProfilFragment"
+        android:label="ProfilFragment"
+        tools:layout="@layout/fragment_profil" >
+        <action
+            android:id="@+id/action_ProfilFragment_to_AddRibolovnaMestaFragment"
+            app:destination="@id/AddRibolovnaMestaFragment" />
+        <action
+            android:id="@+id/action_ProfilFragmentFragment_to_LoginFragment"
+            app:destination="@id/LoginFragment" />
+        <action
+            android:id="@+id/action_ProfilFragmentFragment_to_HomeFragment"
+            app:destination="@id/HomeFragment" />
+        <action
+            android:id="@+id/action_ProfilFragmentFragment_to_RangListaFragment"
+            app:destination="@id/RangListaFragment" />
+    </fragment>
 </navigation>

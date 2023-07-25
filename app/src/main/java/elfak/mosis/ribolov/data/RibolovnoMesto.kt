@@ -4,8 +4,9 @@ import java.time.DateTimeException
 import java.util.*
 
 data class RibolovnoMesto(
-    var id: String= UUID.randomUUID().toString(),
+    var id: String= "",
     var naziv: String="",
+    var oglasavac: String="",
     var vrstaRibe: String="",
     var pristupacnost: Boolean,
     var uredjenost: Boolean,
@@ -14,7 +15,12 @@ data class RibolovnoMesto(
     var sator: Boolean,
     var latitude: Double=0.0,
     var longitude: Double=0.0,
-    var datumPostavljanja: Date,
-    var like: Int=0,
-    var dislike: Int=0
-)
+    var datumPostavljanja: Date
+){
+    constructor():this("","","","",false,false,false,false,false,0.0,0.0,Date()
+    )
+    public fun getOglasavaca(): String
+    {
+        return oglasavac
+    }
+}
