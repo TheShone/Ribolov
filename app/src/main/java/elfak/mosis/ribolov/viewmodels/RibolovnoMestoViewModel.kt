@@ -15,6 +15,7 @@ import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
 import elfak.mosis.ribolov.data.RibolovnoMesto
 import elfak.mosis.ribolov.data.User
+import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.math.atan2
 import kotlin.math.cos
@@ -90,45 +91,33 @@ class RibolovnoMestoViewModel: ViewModel() {
     uredjenost: Boolean, cistocaDna: Boolean, platforma: Boolean, sator: Boolean, datum: Date, radijus: Double, userLat: Double, userLong: Double
     )
     {
-        val databaseUser = FirebaseDatabase.getInstance("https://ribolov-a8c7c-default-rtdb.europe-west1.firebasedatabase.app/").getReference("RibolovnaMesta")
-        databaseUser.addListenerForSingleValueEvent(object : ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-                val filtriranaRibolovnaMesta = mutableListOf<RibolovnoMesto>()
+        val filterOglasavac = oglasavac.isNotEmpty()
+        val filterNaziv = naziv.isNotEmpty()
+        val filterTipRibe = tipRibe != "Izaberi"
+        val filterRadijus = radijus != 0.0
 
-                for (ribolovnoMestoSnapshot in snapshot.children) {
-                    val ribMesto = ribolovnoMestoSnapshot.getValue(RibolovnoMesto::class.java)
+        val originalnaRibolovnaMesta = _ResetRibolovnaMesta.value ?: emptyList()
 
-                    if (ribMesto != null) {
-                        val filterOglasavac = oglasavac.isNotEmpty()
-                        val filterNaziv = naziv.isNotEmpty()
-                        val filterTipRibe = tipRibe!="Izaberi"
-                        val filterRadijus = radijus!=0.0
-                        val matchOglasavac = !filterOglasavac || ribMesto.oglasavac.contains(oglasavac, ignoreCase = true)
-                        val matchNaziv = !filterNaziv || ribMesto.naziv.contains(naziv, ignoreCase = true)
-                        val matchTipRibe = !filterTipRibe || ribMesto.vrstaRibe.contains(tipRibe, ignoreCase = true)
-                        val matchPristupacnost = !pristupacnost || ribMesto.pristupacnost
-                        val matchUredjenost = !uredjenost || ribMesto.uredjenost
-                        val matchCistocaDna = !cistocaDna || ribMesto.cistocaDna
-                        val matchPlatforma = !platforma || ribMesto.platforma
-                        val matchSator = !sator || ribMesto.sator
-                        val matchDatum = ribMesto.datumPostavljanja.after(datum)
-                        val matchRadijus = !filterRadijus || getDistance(userLat,userLong,ribMesto.latitude,ribMesto.longitude)<radijus
-                        if (matchOglasavac && matchNaziv && matchTipRibe && matchPristupacnost && matchUredjenost &&
-                            matchCistocaDna && matchPlatforma && matchSator && matchDatum && matchRadijus
-                        ) {
-                            filtriranaRibolovnaMesta.add(ribMesto)
-                        }
-                    }
-                }
+        val filtriranaRibolovnaMesta = originalnaRibolovnaMesta.filter { ribMesto ->
+            val matchOglasavac = !filterOglasavac || ribMesto.oglasavac.contains(oglasavac, ignoreCase = true)
+            val matchNaziv = !filterNaziv || ribMesto.naziv.contains(naziv, ignoreCase = true)
+            val matchTipRibe = !filterTipRibe || ribMesto.vrstaRibe.contains(tipRibe, ignoreCase = true)
+            val matchPristupacnost = !pristupacnost || ribMesto.pristupacnost
+            val matchUredjenost = !uredjenost || ribMesto.uredjenost
+            val matchCistocaDna = !cistocaDna || ribMesto.cistocaDna
+            val matchPlatforma = !platforma || ribMesto.platforma
+            val matchSator = !sator || ribMesto.sator
+            val matchDatum = ribMesto.datumPostavljanja.after(datum)
+            val matchRadijus = !filterRadijus || getDistance(userLat, userLong, ribMesto.latitude, ribMesto.longitude) < radijus
 
-                _ribMesta.value = filtriranaRibolovnaMesta
-                _filtriranaRibolovnaMesta.value = filtriranaRibolovnaMesta
-            }
+            matchOglasavac && matchNaziv && matchTipRibe && matchPristupacnost && matchUredjenost &&
+                    matchCistocaDna && matchPlatforma && matchSator && matchDatum && matchRadijus
+        }
+               _ribMesta.value = filtriranaRibolovnaMesta
+               _filtriranaRibolovnaMesta.value = filtriranaRibolovnaMesta
 
-            override fun onCancelled(error: DatabaseError) {
-                Log.w(ContentValues.TAG, "Failed to read value.", error.toException())
-            }
-        })
+
+
     }
     fun resetFilter()
     {

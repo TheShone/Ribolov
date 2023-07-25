@@ -75,7 +75,9 @@ class FilterFragment :  DialogFragment() {
             val platforma = editPlatforma.isChecked()
             val sator=editSator.isChecked()
             val editDate: DatePicker = view.findViewById(R.id.datePicker)
-            val selectedDate: Date = Date(editDate.year - 1900, editDate.month, editDate.dayOfMonth)
+            val calendar = Calendar.getInstance()
+            calendar.set(editDate.year, editDate.month, editDate.dayOfMonth)
+            val selectedDate: Date = calendar.time
             val rad = editRadijus.text.toString()
             var radijus = 0.0
             if(rad!="")
