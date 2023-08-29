@@ -38,7 +38,7 @@ class TableFragment : DialogFragment() {
         recyclerView = view.findViewById(R.id.recyclerView)
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
 
-        val ribolovnaMestaList = ribolovnoMestoViewModel.ribolovnaMesta.value ?: emptyList()
+        val ribolovnaMestaList = ribolovnoMestoViewModel.filtriranaRibolovnaMesta.value ?: emptyList()
         val adapter = RibolovnoMestoAdapter(ribolovnaMestaList)
         recyclerView.adapter = adapter
     }

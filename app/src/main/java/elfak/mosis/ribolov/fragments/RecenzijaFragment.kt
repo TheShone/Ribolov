@@ -40,7 +40,7 @@ class RecenzijaFragment : DialogFragment() {
     override fun onStart() {
         super.onStart()
 
-        // Set the dialog width and height here (optional)
+
         val dialog = dialog
         if (dialog != null) {
             val width = ViewGroup.LayoutParams.MATCH_PARENT
@@ -70,7 +70,6 @@ class RecenzijaFragment : DialogFragment() {
             val user = loggedUserViewModel.user
             val databaseUser = FirebaseDatabase.getInstance("https://ribolov-a8c7c-default-rtdb.europe-west1.firebasedatabase.app/").getReference("Recenzije")
             val id = databaseUser.push().key
-            Toast.makeText(activity, ocena.toString(), Toast.LENGTH_SHORT).show()
             if(user?.korisnickoime!=ribolovnoMestoViewModel.ribMesto?.oglasavac) {
                 var recenzija = Recenzija(
                     id!!,
@@ -81,6 +80,7 @@ class RecenzijaFragment : DialogFragment() {
                     komentar
                 )
                 recenzijaViewModel.dodajRecenziju(recenzija, loggedUserViewModel?.user!!)
+                Toast.makeText(activity, "Uspesno dodata recenzija", Toast.LENGTH_SHORT).show()
             }
             else
             {

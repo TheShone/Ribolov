@@ -58,7 +58,7 @@ class RibolovnoMestoViewModel: ViewModel() {
 
         return earthRadius * c
     }
-    fun getRibolovnaMesta(location: LatLng, radius: Int=10000, onDataLoaded: () -> Unit)
+    fun getRibolovnaMesta(location: LatLng, radius: Int=1000000, onDataLoaded: () -> Unit)
     {
         val databaseUser = FirebaseDatabase.getInstance("https://ribolov-a8c7c-default-rtdb.europe-west1.firebasedatabase.app/").getReference("RibolovnaMesta")
         databaseUser.addValueEventListener(object: ValueEventListener {
@@ -78,6 +78,7 @@ class RibolovnoMestoViewModel: ViewModel() {
                     }
                     _ribMesta.value=ribolovnaMesta
                     _ResetRibolovnaMesta.value=ribolovnaMesta
+                    _filtriranaRibolovnaMesta.value=ribolovnaMesta
                     onDataLoaded()
                 }
             }
