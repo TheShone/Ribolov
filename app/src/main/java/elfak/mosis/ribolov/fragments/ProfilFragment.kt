@@ -75,9 +75,9 @@ class ProfilFragment : Fragment() {
         binding.profilKorisnicko.setText((loggedUserViewModel.user?.korisnickoime))
         binding.profilTelefon.setText(loggedUserViewModel.user?.brojtelefona)
         binding.profilPoeni.text = loggedUserViewModel.user?.points.toString()
-        Glide.with(this) // 'this' se odnosi na vašu aktivnost ili fragment
+        Glide.with(this)
             .load(loggedUserViewModel.user?.imageURL)
-            .apply(RequestOptions().diskCacheStrategy(DiskCacheStrategy.ALL)) // opciono, da biste keširali sliku
+            .apply(RequestOptions().diskCacheStrategy(DiskCacheStrategy.ALL))
             .into(binding.profilSlika)
     }
 

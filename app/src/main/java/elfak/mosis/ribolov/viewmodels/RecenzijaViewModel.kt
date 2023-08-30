@@ -3,6 +3,7 @@ package elfak.mosis.ribolov.viewmodels
 import android.content.ContentValues
 import android.util.Log
 import android.widget.Toast
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -25,7 +26,7 @@ class RecenzijaViewModel: ViewModel() {
     get() = _toastMessage
     private val _recenzija= MutableLiveData<Recenzija?>(null)
     private val _recenzije = MutableLiveData<List<Recenzija>>(emptyList())
-
+    private val loggedUserViewModel= LoggedUserViewModel()
 
     var recenzija
         get() = _recenzija.value
@@ -50,17 +51,6 @@ class RecenzijaViewModel: ViewModel() {
                     val username: String =
                         dataSnapshot.child("oglasavac").getValue(String::class.java)!!
                     databaseUser = FirebaseDatabase.getInstance("https://ribolov-a8c7c-default-rtdb.europe-west1.firebasedatabase.app/").getReference("Users")
-                    var poin=0
-                    databaseUser.child(recenzijaa.recezent).get().addOnCompleteListener { task ->
-                        if (task.isSuccessful) {
-                            dataSnapshot = task.result
-                            if (dataSnapshot.exists()) {
-                                val dataSnapshot = task.result
-                                poin = dataSnapshot.child("points").getValue(Int::class.java) as? Int ?: 0
-                                databaseUser.child(recenzijaa.recezent).child("points").setValue(poin+2)
-                            }
-                        }
-                    }
                     var points=0
                     databaseUser.child(username).get().addOnCompleteListener { task ->
                         if (task.isSuccessful) {

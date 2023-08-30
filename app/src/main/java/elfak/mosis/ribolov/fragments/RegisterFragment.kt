@@ -25,6 +25,8 @@ import java.io.FileNotFoundException
 import java.io.InputStream
 import java.security.MessageDigest
 import kotlin.random.Random
+import android.util.Log;
+
 
 
 class RegisterFragment : Fragment() {

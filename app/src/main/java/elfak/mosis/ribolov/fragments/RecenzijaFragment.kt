@@ -80,6 +80,23 @@ class RecenzijaFragment : DialogFragment() {
                     komentar
                 )
                 recenzijaViewModel.dodajRecenziju(recenzija, loggedUserViewModel?.user!!)
+                var databaseUser = FirebaseDatabase.getInstance("https://ribolov-a8c7c-default-rtdb.europe-west1.firebasedatabase.app/").getReference("Users")
+                var poin=0
+                databaseUser.child(recenzija.recezent).get().addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
+                        val dataSnapshot = task.result
+                        if (dataSnapshot.exists()) {
+                            val dataSnapshot = task.result
+                            poin = dataSnapshot.child("points").getValue(Int::class.java) as? Int ?: 0
+                            databaseUser.child(recenzija.recezent).child("points").setValue(poin+2).addOnCompleteListener() {
+                                loggedUserViewModel.user!!.points=poin+2
+                            }
+
+
+
+                        }
+                    }
+                }
                 Toast.makeText(activity, "Uspesno dodata recenzija", Toast.LENGTH_SHORT).show()
             }
             else
